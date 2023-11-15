@@ -33,8 +33,9 @@ function getRectangleArea(width, height) {
  *   3.14 => 19.729201864543903
  *   0    => 0
  */
-function getCircleCircumference(/* radius */) {
-  throw new Error('Not implemented');
+function getCircleCircumference(radius) {
+  const c = 2 * (radius * Math.PI);
+  return c;
 }
 
 /**
@@ -177,8 +178,9 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
+function roundToPowerOfTen(num, pow) {
+  const newNum = Math.round(num / 10 ** pow) * 10 ** pow;
+  return newNum;
 }
 
 /**
@@ -323,7 +325,15 @@ function getSumOfDigits(num) {
  *   15  => false
  */
 function isPowerOfTwo(num) {
-  return num % 2 === 0;
+  let number = num;
+  while (number) {
+    if (number % 2 === 0) {
+      number /= 2;
+    } else {
+      return number === 1;
+    }
+  }
+  return true;
 }
 
 /**
@@ -365,8 +375,8 @@ function numberToStringInBase(number, base) {
  * @example:
  * 12345, 2    => '1.23e+4'
  */
-function toExponential(/* number, fractionDigits */) {
-  throw new Error('Not implemented');
+function toExponential(number, fractionDigits) {
+  return number.toExponential(fractionDigits);
 }
 
 /**
@@ -380,8 +390,8 @@ function toExponential(/* number, fractionDigits */) {
  * 12345, 2    => '12345.00'
  * 12.345, 1   => '12.3'
  */
-function toFixed(/* number, fractionDigits */) {
-  throw new Error('Not implemented');
+function toFixed(number, fractionDigits) {
+  return number.toFixed(fractionDigits);
 }
 
 /**
@@ -396,8 +406,8 @@ function toFixed(/* number, fractionDigits */) {
  * 12345, 7    => '12345.00'
  * 12.345, 4   => '12.35'
  */
-function toPrecision(/* number, precision */) {
-  throw new Error('Not implemented');
+function toPrecision(number, precision) {
+  return number.toPrecision(precision);
 }
 
 /**
@@ -410,8 +420,8 @@ function toPrecision(/* number, precision */) {
  * new Number(5) => 5
  * Number(-5)    => -5
  */
-function getNumberValue(/* number */) {
-  throw new Error('Not implemented');
+function getNumberValue(number) {
+  return +number;
 }
 
 /**
@@ -429,8 +439,14 @@ function getNumberValue(/* number */) {
  * 5        => true
  * '5'      => false
  */
-function isNumber(/* number */) {
-  throw new Error('Not implemented');
+function isNumber(number) {
+  if (Number.isNaN(number)) {
+    return false;
+  }
+  if (number === Infinity) {
+    return false;
+  }
+  return typeof number === 'number';
 }
 
 /**
@@ -458,8 +474,8 @@ function isInteger(number) {
  * '4.567abcdefgh' => 4.567
  * 'abcdefgh'      => NaN
  */
-function getFloatOnString(/* str */) {
-  throw new Error('Not implemented');
+function getFloatOnString(str) {
+  return parseFloat(str);
 }
 
 /**
@@ -476,8 +492,8 @@ function getFloatOnString(/* str */) {
  * '1.234', 2           => 1
  * '10', 8              => 8
  */
-function getIntegerOnString(/* str, base */) {
-  throw new Error('Not implemented');
+function getIntegerOnString(str, base) {
+  return parseInt(str, base);
 }
 
 /**
@@ -492,7 +508,7 @@ function getIntegerOnString(/* str, base */) {
  * 2 ** 53  => false
  */
 function isSafeInteger(number) {
-  return number.isSafeInteger();
+  return Number.isSafeInteger(number);
 }
 
 /**
@@ -631,7 +647,8 @@ function getHypotenuse(a, b) {
  */
 function getCountOfOddNumbers(number) {
   let count = 0;
-  for (let i = 0; i <= number; i += 1) {
+  const num = Math.abs(number);
+  for (let i = 0; i <= num; i += 1) {
     if (i % 2 !== 0) {
       count += 1;
     }
